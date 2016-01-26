@@ -1,5 +1,6 @@
 {
     "name": "panic/notifications",
+    "version": "0.0.1",
     "description": "Multi notifications package",
     "license": "MIT",
     "authors": [
