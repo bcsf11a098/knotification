@@ -1,0 +1,1 @@
+Welcome {{ $user->name }}, this is your first notification!
