@@ -1,5 +1,7 @@
 <?php
+
 namespace Panic\Notifications;
+
 
 interface NotificationSender {
 

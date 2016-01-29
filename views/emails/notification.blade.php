@@ -1,1 +1,5 @@
-Welcome {{ $user->name }}, this is your first notification!
+Hi,
+
+{{ $data->getMessage() }}
+
+Cloud Horizon.

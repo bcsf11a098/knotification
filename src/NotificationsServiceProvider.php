@@ -2,7 +2,9 @@
 
 namespace Panic\Notifications;
 
+
 use Illuminate\Support\ServiceProvider;
+
 
 class NotificationsServiceProvider extends ServiceProvider
 {
@@ -20,11 +22,11 @@ class NotificationsServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        // $this->handleConfigs();
+        $this->handleConfigs();
         // $this->handleMigrations();
         $this->handleViews();
         // $this->handleTranslations();
-        $this->handleRoutes();
+        // $this->handleRoutes();
     }
 
     /**
@@ -63,6 +65,6 @@ class NotificationsServiceProvider extends ServiceProvider
         $this->publishes([__DIR__ . '/../migrations' => base_path('database/migrations')]);
     }
     private function handleRoutes() {
-        include __DIR__.'/Http/routes.php';
+        include __DIR__.'/../routes.php';
     }
 }
