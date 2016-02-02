@@ -3,7 +3,7 @@
 namespace Panic\Notifications;
 
 
-abstract class MessageData
+class MessageData
 {
     protected $message;
 
@@ -23,4 +23,5 @@ abstract class MessageData
     {
         $this->message = $message;
     }
+
 }

@@ -1,11 +1,13 @@
 <?php
 
-namespace Panic\Notifications;
+namespace Panic\Notifications\SMS;
 
 
+use Panic\Notifications\NotificationSender;
 use Illuminate\Support\Facades\Config;
 use Services_Twilio;
 use Log;
+use Carbon;
 
 
 class SMSSender implements NotificationSender
@@ -23,9 +25,15 @@ class SMSSender implements NotificationSender
 
             $from = Config::get("notifications.TWILIO_FROM");
 
-            $info = $client->account->messages->sendMessage($from, $data->getNumberTo(), $data->getMessage());
+            $numbers = $data->getNumbersTo();
+            foreach($numbers as $number) {
+                $info = $client->account->messages->sendMessage($from, $number, $data->getMessage());
 
-            Log::info('SMS successfully sent.', ['sid' => $info->sid, 'status' => $info->status, 'from' => $info->from, 'to' => $info->to, 'body' => $info->body, 'date_created' => $info->date_created]);
+                Log::info('SMS successfully sent.', [
+                    'sid' => $info->sid,
+                    'date_created' => Carbon::now()
+                ]);
+            }
 
         } catch (Exception $e) {
 

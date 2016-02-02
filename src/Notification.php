@@ -7,7 +7,7 @@ class Notification
 {
     public function send(MessageData $data)
     {
-        $sender_class = 'Panic\\Notifications\\'.$data->getSender();
+        $sender_class = $data->getSender();
 
         $notification = new $sender_class;
 
