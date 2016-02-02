@@ -5,6 +5,9 @@ use Illuminate\Http\Request;
 use Illuminate\Database\Capsule\Manager as DB;
 use Illuminate\Database\Eloquent\Model as Eloquent;
 use Panic\Notifications\Notification;
+use Panic\Notifications\Email\MailData;
+use Panic\Notifications\SMS\SMSData;
+use Panic\Notifications\Push\PushNotificationData;
 
 
 class NotificationsTest extends PHPUnit_Framework_TestCase
@@ -37,7 +40,7 @@ class NotificationsTest extends PHPUnit_Framework_TestCase
     /**
      * @var \Guzzle\Http\Client
      */
-    private $mailcatcher;
+    /*private $mailcatcher;
 
     public function setUp()
     {
@@ -122,5 +125,48 @@ class NotificationsTest extends PHPUnit_Framework_TestCase
         $this->assertEmailSubjectEquals('[Bugira] Ticket #2 has been closed', $email);
         $this->assertEmailSubjectContains('Ticket #2', $email);
         $this->assertEmailHtmlContains('#2 integer pede justo lacinia eget tincidunt', $email);
+    }*/
+    protected $mail_data;
+
+    protected $sms_data;
+
+    protected $push_data;
+
+    public function setUp()
+    {
+        $this->mail_data = new MailData('filip@cloudhorizon.com', 'Welcome!', 'This is your first notification!');
+
+        $this->sms_data = new SMSData(array('+381642062558'), 'This is your first notification!');
+
+        $this->push_data = new PushNotificationData('appNameAndroid', array('qwerty','asdfg'), 'This is your first notification!');
+    }
+
+    /** @test */
+    function mailHasData()
+    {
+        $this->assertEquals(array('filip@cloudhorizon.com'), $this->mail_data->getEmailsTo());
+
+        $this->assertEquals('Welcome!', $this->mail_data->getSubject());
+
+        $this->assertEquals('This is your first notification!', $this->mail_data->getMessage());
+
+    }
+
+    /** @test */
+    function SMSHasData()
+    {
+        $this->assertEquals(array('+381642062558'), $this->sms_data->getNumbersTo());
+
+        $this->assertEquals('This is your first notification!', $this->sms_data->getMessage());
+    }
+
+    /** @test */
+    function PushNotificationHasData()
+    {
+        $this->assertEquals('appNameAndroid', $this->push_data->getAppName());
+
+        $this->assertEquals(array('qwerty','asdfg'), $this->push_data->getDevicesToken());
+
+        $this->assertEquals('This is your first notification!', $this->push_data->getMessage());
     }
 }
