@@ -31,7 +31,7 @@ class SMSSender implements NotificationSender
 
                 Log::info('SMS successfully sent.', [
                     'sid' => $info->sid,
-                    'date_created' => Carbon::now()
+                    'date_created' => Carbon\Carbon::now()
                 ]);
             }
 

@@ -24,7 +24,7 @@ class MailData extends MessageData
 
         }
 
-        $data = array("emails"=>$emails_to, "subject"=>$subject, "message"=>$message);
+        $data = array("emails" => $emails_to, "subject" => $subject, "message" => $message);
 
         if($this->isValid($data)) {
 

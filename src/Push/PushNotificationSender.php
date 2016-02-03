@@ -7,7 +7,6 @@ use Panic\Notifications\NotificationSender;
 use Davibennun\LaravelPushNotification\Facades\PushNotification;
 use Illuminate\Support\Facades\Config;
 use Log;
-use Carbon;
 
 class PushNotificationSender implements NotificationSender
 {
