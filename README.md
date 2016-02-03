@@ -39,7 +39,7 @@
 
 * Copy the config and view files into your project by running:
 
-php artisan vendor:publish
+php artisan vendor:publish --provider="Panic\Notifications\NotificationsServiceProvider"
 
 * Update config file: config/notifications.php with your credentials
 * Update view fale template for email: resource/views/panic/notifications/emails/notification.blade.php
