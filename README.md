@@ -27,6 +27,7 @@
 ```
 * Register the Notifications service provider by adding it to the providers array in the app/config/app.php file.
 
+```
 'providers' => array(
     ...
     Panic\Notifications\NotificationsServiceProvider::class
@@ -37,13 +38,15 @@
     ...
     'PushNotification' => Davibennun\LaravelPushNotification\Facades\PushNotification::class
 )
+```
 
 ### Configuration ###
 
 * Copy the config and view files into your project by running:
 
+```
 php artisan vendor:publish --provider="Panic\Notifications\NotificationsServiceProvider"
-
+```
 * Update config file: config/notifications.php with your credentials
 * Update view fale template for email: resource/views/panic/notifications/emails/notification.blade.php
 
@@ -58,6 +61,7 @@ use Panic\Notifications\SMS\SMSData;
 
 ## Email ##
 
+```
 $emails_to = array(email1@domain.com, email2@domain.com, ...);
 $subject = 'Notification!';
 $message = 'This is your first email notification!';
@@ -65,18 +69,18 @@ $message = 'This is your first email notification!';
 $data = new MailData($emails_to, $subject, $message);
 
 $notification->send($data);
-
+```
 ## SMS ##
-
+```
 $mobile_numbers = array('+3816012345678','0038187654321');
 $message = 'This is your first sms notification!';
 
 $data = new SMSData($mobile_numbers, $message);
 
 $notification->send($data);
-
+```
 ## Push notification ##
-
+```
 $app_name = "appName"; //from configuration file
 $devices_token = array('devicetoken1', 'devicetoken2', ...);
 $message = 'This is your first push notification!';
@@ -84,11 +88,11 @@ $message = 'This is your first push notification!';
 $data = new PushNotificationData($app_name, $devices_token, $message);
 
 $notification->send($data);
-
+```
 * Copy the config and view files into your project by running:
-
+```
 php artisan vendor:publish
-
+```
 ### Prerequisites ###
 
 php >= 5.5.9
