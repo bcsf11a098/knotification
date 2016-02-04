@@ -11,7 +11,7 @@
 ### Installation ###
 
 * Update your composer.json file to include this package as a dependency 
-
+```
 "require": {
     ...
     "panic/notifications" : "*"
@@ -24,6 +24,7 @@
             "type": "vcs"
         }
     ],
+```
 * Register the Notifications service provider by adding it to the providers array in the app/config/app.php file.
 
 'providers' => array(
