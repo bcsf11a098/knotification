@@ -29,7 +29,14 @@
 'providers' => array(
     ...
     Panic\Notifications\NotificationsServiceProvider::class
+    Davibennun\LaravelPushNotification\LaravelPushNotificationServiceProvider::class,
 )
+
+'aliases' => [ array(
+    ...
+    'PushNotification' => Davibennun\LaravelPushNotification\Facades\PushNotification::class
+)
+
 * Dependencies
 * Database configuration
 * How to run tests
