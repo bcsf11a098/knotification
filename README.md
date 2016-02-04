@@ -37,11 +37,6 @@
     'PushNotification' => Davibennun\LaravelPushNotification\Facades\PushNotification::class
 )
 
-* Dependencies
-* Database configuration
-* How to run tests
-* Deployment instructions
-
 ### Configuration ###
 
 * Copy the config and view files into your project by running:
@@ -95,7 +90,8 @@ php artisan vendor:publish
 
 ### Prerequisites ###
 
-
+php >= 5.5.9
+laravel/framework : 5.1.*
 
 ### Contribution guidelines ###
 
