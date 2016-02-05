@@ -12,14 +12,17 @@ class MailSender implements NotificationSender {
 
     public function send($data)
     {
-        $emails = $data->getEmailsTo();
+        $emailFrom = $data->getEmailFrom();
+        $emailFromTitle = $data->getEmailFromTitle();
+        $emailsTo = $data->getEmailsTo();
         $subject = $data->getSubject();
-        foreach ($emails as $email) {
 
-            Mail::send('notifications::emails.notification', ['data' => $data], function ($m) use ($data, $email, $subject) {
-                $m->from(Config::get("notifications.MAIL_FROM"), Config::get("notifications.MAIL_FROM_TITLE"));
+        foreach ($emailsTo as $emailTo) {
 
-                $m->to($email, 'Cloud Horizon')->subject($subject);
+            Mail::send('notifications::emails.notification', ['data' => $data], function ($m) use ($data, $emailFrom, $emailFromTitle, $emailTo, $subject) {
+                $m->from($emailFrom, $emailFromTitle);
+
+                $m->to($emailTo, 'Cloud Horizon')->subject($subject);
             });
 
         }

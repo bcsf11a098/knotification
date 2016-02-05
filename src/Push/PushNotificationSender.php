@@ -14,13 +14,13 @@ class PushNotificationSender implements NotificationSender
     {
         $app = (Config::get("notifications.".$data->getAppName()));
 
-        $devices_token = $data->getDevicesToken();
-        $devices_collection = array();
-        foreach($devices_token as $device_token){
-            $devices_collection[] = PushNotification::Device($device_token);
+        $devicesToken = $data->getDevicesToken();
+        $devicesCollection = array();
+        foreach($devicesToken as $deviceToken){
+            $devicesCollection[] = PushNotification::Device($deviceToken);
         }
 
-        $devices = PushNotification::DeviceCollection($devices_collection);
+        $devices = PushNotification::DeviceCollection($devicesCollection);
 
         $collection = PushNotification::app($app)
             ->to($devices)

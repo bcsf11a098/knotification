@@ -3,59 +3,97 @@
 namespace Panic\Notifications\Email;
 
 
-use Illuminate\Support\Facades\Validator;
 use Panic\Notifications\MessageData;
-use Panic\Notifications\NotificationValidation;
+use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\Config;
 
 
 class MailData extends MessageData
 {
+    protected $emailFrom;
 
-    protected $emails_to;
+    protected $emailFromTitle;
+
+    protected $emailsTo;
 
     protected $subject;
 
     protected $sender = "Panic\\Notifications\\Email\\MailSender";
 
 
-    function __construct($emails_to, $subject, $message)
+    function __construct($emailsTo, $subject, $message, $emailFrom = "", $emailFromTitle = "")
     {
 
 
-        if(!is_array($emails_to)){
+        if(!is_array($emailsTo)){
 
-            $emails_to = array($emails_to);
+            $emailsTo = array($emailsTo);
 
         }
 
-        $data = array("emails" => $emails_to, "subject" => $subject, "message" => $message);
+        if($emailFrom == ""){
 
-        // Laravel Validation
-        if($this->laravelValidation($data)->fails()) {
+            $this->emailFrom = Config::get("notifications.MAIL_FROM");
+
+        }else{
+
+            $this->emailFrom = $emailFrom;
+
+        }
+
+        if($emailFromTitle == ""){
+
+            $this->emailFromTitle = Config::get("notifications.MAIL_FROM_TITLE");
+
+        }else{
+
+            $this->emailFromTitle = $emailFromTitle;
+
+        }
+
+
+        $data = array("emailFrom" => $emailFrom, "emailFromTitle" => $emailFromTitle, "emailsTo" => $emailsTo, "subject" => $subject, "message" => $message);
+
+        if($this->isValid($data)->fails()) {
             throw new \Exception('Data is not valid.');
         }
 
-        // Custom Validation NotificationValidation class
-        if($this->isValid($data)) {
+        $this->emailsTo = $emailsTo;
 
-            $this->emails_to = $emails_to;
+        $this->subject = $subject;
 
-            $this->subject = $subject;
+        $this->message = $message;
 
-            $this->message = $message;
-
-        }
     }
 
+    public function getEmailFrom()
+    {
+        return $this->emailFrom;
+    }
+
+    public function setEmailFrom($emailFrom)
+    {
+        $this->emailFrom = $emailFrom;
+    }
+
+    public function getEmailFromTitle()
+    {
+        return $this->emailFromTitle;
+    }
+
+    public function setEmailFromTitle($emailFromTitle)
+    {
+        $this->emailFromTitle = $emailFromTitle;
+    }
 
     public function getEmailsTo()
     {
-        return $this->emails_to;
+        return $this->emailsTo;
     }
 
-    public function setEmailsTo($emails_to)
+    public function setEmailsTo($emailsTo)
     {
-        $this->emails_to = $emails_to;
+        $this->emailsTo = $emailsTo;
     }
 
     public function getSubject()
@@ -68,37 +106,29 @@ class MailData extends MessageData
         $this->subject = $subject;
     }
 
-    public function laravelValidation($data)
+    public function isValid($data)
     {
-        Validator::extend("emails", function($attribute, $value, $parameters) {
-            $rules = [
-                'email' => 'required|email',
-            ];
-            foreach ($value as $email) {
-                $data = [
-                    'email' => $email
-                ];
-                $validator = Validator::make($data, $rules);
-                if ($validator->fails()) {
-                    return false;
-                }
+
+        foreach($data['emailsTo'] as $data['emailTo']){
+            $validator = Validator::make($data, [
+                'emailTo' => 'required|email',
+            ]);
+
+            if($validator->fails()){
+                throw new \Exception($data['emailTo'] . ' is not a valid email address.');
             }
-            return true;
-        });
+        }
 
         $validator = Validator::make($data, [
-            'email' => 'required|emails',
-            'subject' => 'required',
-            'message' => 'required',
+            'emailFrom' => 'email',
+            'subject' => 'required|string',
+            'message' => 'required|string',
         ]);
 
+        if($validator->fails()){
+            throw new \Exception($validator->messages()->first());
+        }
+
         return $validator;
-    }
-
-    public function isValid($data) {
-        NotificationValidation::isValidEmail($data['emails']);
-        NotificationValidation::isValidString(array("subject"=>$data['subject'],"message"=>$data['message']));
-
-        return true;
     }
 }

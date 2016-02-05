@@ -4,64 +4,84 @@ namespace Panic\Notifications\Push;
 
 
 use Panic\Notifications\MessageData;
-use Panic\Notifications\NotificationValidation;
+use Illuminate\Support\Facades\Validator;
 
 
 class PushNotificationData extends MessageData
 {
-    protected $app_name;
+    protected $appName;
 
-    protected $devices_token;
+    protected $devicesToken;
 
     protected $message;
 
     protected $sender = "Panic\\Notifications\\Push\\PushNotificationSender";
 
 
-    function __construct($app_name, $devices_token, $message)
+    function __construct($appName, $devicesToken, $message)
     {
-        if(!is_array($devices_token)){
+        if(!is_array($devicesToken)){
 
-            $devices_token = array($devices_token);
+            $devicesToken = array($devicesToken);
 
         }
 
-        $data = array("app_name" => $app_name, "devices_token" => $devices_token, "message" => $message);
+        $data = array("appName" => $appName, "devicesToken" => $devicesToken, "message" => $message);
 
-        if($this->isValid($data)) {
-
-            $this->app_name = $app_name;
-
-            $this->devices_token = $devices_token;
-
-            $this->message = $message;
+        if($this->isValid($data)->fails()) {
+            throw new \Exception('Data is not valid.');
         }
+
+        $this->appName = $appName;
+
+        $this->devicesToken = $devicesToken;
+
+        $this->message = $message;
 
     }
 
     public function getAppName()
     {
-        return $this->app_name;
+        return $this->appName;
     }
 
-    public function setAppName($app_name)
+    public function setAppName($appName)
     {
-        $this->app_name = $app_name;
+        $this->appName = $appName;
     }
 
     public function getDevicesToken()
     {
-        return $this->devices_token;
+        return $this->devicesToken;
     }
 
-    public function setDevicesToken($devices_token)
+    public function setDevicesToken($devicesToken)
     {
-        $this->devices_token = $devices_token;
+        $this->devicesToken = $devicesToken;
     }
 
-    public function isValid($data) {
-        NotificationValidation::isValidString(array("app_name"=>$data['app_name'], "devices_token"=>$data['devices_token'], "message"=>$data['message']));
+    public function isValid($data)
+    {
 
-        return true;
+        foreach($data['devicesToken'] as $data['deviceToken']){
+            $validator = Validator::make($data, [
+                'deviceToken' => 'required|string',
+            ]);
+
+            if($validator->fails()){
+                throw new \Exception($data['deviceToken'] . ' is not a valid device token.');
+            }
+        }
+
+        $validator = Validator::make($data, [
+            'appName' => 'required|string',
+            'message' => 'required|string',
+        ]);
+
+        if($validator->fails()){
+            throw new \Exception($validator->messages()->first());
+        }
+
+        return $validator;
     }
 }

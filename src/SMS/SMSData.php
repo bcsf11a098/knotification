@@ -4,31 +4,31 @@ namespace Panic\Notifications\SMS;
 
 
 use Panic\Notifications\MessageData;
-use Panic\Notifications\NotificationValidation;
+use Illuminate\Support\Facades\Validator;
 
 
 class SMSData extends MessageData
 {
-    protected $numbers_to;
+    protected $numbersTo;
 
     protected $message;
 
     protected $sender = "Panic\\Notifications\\SMS\\SMSSender";
 
 
-    function __construct($numbers_to, $message)
+    function __construct($numbersTo, $message)
     {
-        if(!is_array($numbers_to)){
+        if(!is_array($numbersTo)){
 
-            $numbers_to = array($numbers_to);
+            $numbersTo = array($numbersTo);
 
         }
 
-        $data = array("numbers" => $numbers_to, "message" => $message);
+        $data = array("numbers" => $numbersTo, "message" => $message);
 
         if($this->isValid($data)) {
 
-            $this->numbers_to = $numbers_to;
+            $this->numbersTo = $numbersTo;
 
             $this->message = $message;
 
@@ -37,19 +37,35 @@ class SMSData extends MessageData
 
     public function getNumbersTo()
     {
-        return $this->numbers_to;
+        return $this->numbersTo;
     }
 
-    public function setNumbersTo($numbers_to)
+    public function setNumbersTo($numbersTo)
     {
-        $this->numbers_to = $numbers_to;
+        $this->numbersTo = $numbersTo;
     }
 
-    public function isValid($data) {
-        NotificationValidation::isValidNumbers($data['numbers']);
-        NotificationValidation::isValidString(array("message"=>$data['message']));
+    public function isValid($data)
+    {
+        $rules = array('number' => array('regex:/^(\+|\d)[0-9]{7,16}$/'));
+        foreach($data['numbers'] as $data['number']){
 
-        return true;
+            $validator = Validator::make($data, $rules);
+
+            if($validator->fails()){
+                throw new \Exception($data['number'] . ' is not valid number.');
+            }
+        }
+
+        $validator = Validator::make($data, [
+            'message' => 'required|string',
+        ]);
+
+        if($validator->fails()){
+            throw new \Exception($validator->messages()->first());
+        }
+
+        return $validator;
     }
 
 }
