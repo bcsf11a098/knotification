@@ -62,30 +62,32 @@ use Panic\Notifications\SMS\SMSData;
 ## Email ##
 
 ```
+$emailFrom = 'notification@domain.com'; // if not set use from config file
+$emailFromTitle = 'Domain title'; // if not set use from config file
 $emails_to = array(email1@domain.com, email2@domain.com, ...);
 $subject = 'Notification!';
 $message = 'This is your first email notification!';
 
-$data = new MailData($emails_to, $subject, $message);
+$data = new MailData($emailsTo, $subject, $message, $emailFrom, $emailFromTitle);
 
 $notification->send($data);
 ```
 ## SMS ##
 ```
-$mobile_numbers = array('+3816012345678','0038187654321');
+$mobileNumbers = array('+3816012345678','0038187654321');
 $message = 'This is your first sms notification!';
 
-$data = new SMSData($mobile_numbers, $message);
+$data = new SMSData($mobileNumbers, $message);
 
 $notification->send($data);
 ```
 ## Push notification ##
 ```
-$app_name = "appName"; //from configuration file
-$devices_token = array('devicetoken1', 'devicetoken2', ...);
+$appName = "appName"; //from configuration file
+$devicesToken = array('devicetoken1', 'devicetoken2', ...);
 $message = 'This is your first push notification!';
 
-$data = new PushNotificationData($app_name, $devices_token, $message);
+$data = new PushNotificationData($appName, $devicesToken, $message);
 
 $notification->send($data);
 ```
