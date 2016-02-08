@@ -3,14 +3,14 @@
 namespace Panic\Notifications\SMS;
 
 
-use Panic\Notifications\NotificationSender;
+use Panic\Notifications\NotificationSenderInterface;
 use Illuminate\Support\Facades\Config;
 use Services_Twilio;
 use Log;
 use Carbon;
 
 
-class SMSSender implements NotificationSender
+class SMSSender implements NotificationSenderInterface
 {
     public function send($data)
     {

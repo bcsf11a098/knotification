@@ -5,6 +5,7 @@ namespace Panic\Notifications\Push;
 
 use Panic\Notifications\MessageData;
 use Illuminate\Support\Facades\Validator;
+use Panic\Notifications\Push\PushNotificationSender;
 
 
 class PushNotificationData extends MessageData
@@ -15,7 +16,7 @@ class PushNotificationData extends MessageData
 
     protected $message;
 
-    protected $sender = "Panic\\Notifications\\Push\\PushNotificationSender";
+    protected $sender = PushNotificationSender::class;
 
 
     function __construct($appName, $devicesToken, $message)

@@ -3,11 +3,14 @@
 namespace Panic\Notifications;
 
 
-class MessageData
+use Panic\Notifications\Email\MailSender;
+
+
+abstract class MessageData
 {
     protected $message;
 
-    protected $sender = 'MailSender';
+    protected $sender = MailSender::class;
 
     public function getSender()
     {

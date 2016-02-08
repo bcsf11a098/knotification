@@ -2,13 +2,13 @@
 
 namespace Panic\Notifications\Email;
 
-use Panic\Notifications\NotificationSender;
+use Panic\Notifications\NotificationSenderInterface;
 use Illuminate\Support\Facades\Config;
 use Mail;
 use Log;
 
 
-class MailSender implements NotificationSender {
+class MailSender implements NotificationSenderInterface {
 
     public function send($data)
     {

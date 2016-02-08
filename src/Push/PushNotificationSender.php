@@ -3,12 +3,12 @@
 namespace Panic\Notifications\Push;
 
 
-use Panic\Notifications\NotificationSender;
+use Panic\Notifications\NotificationSenderInterface;
 use Davibennun\LaravelPushNotification\Facades\PushNotification;
 use Illuminate\Support\Facades\Config;
 use Log;
 
-class PushNotificationSender implements NotificationSender
+class PushNotificationSender implements NotificationSenderInterface
 {
     public function send($data)
     {

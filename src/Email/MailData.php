@@ -6,10 +6,13 @@ namespace Panic\Notifications\Email;
 use Panic\Notifications\MessageData;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Config;
+use Panic\Notifications\Email\MailSender;
 
 
 class MailData extends MessageData
 {
+    protected $email_template;
+
     protected $emailFrom;
 
     protected $emailFromTitle;
@@ -18,16 +21,26 @@ class MailData extends MessageData
 
     protected $subject;
 
-    protected $sender = "Panic\\Notifications\\Email\\MailSender";
+    protected $sender = MailSender::class;
 
 
-    function __construct($emailsTo, $subject, $message, $emailFrom = "", $emailFromTitle = "")
+    function __construct($emailsTo, $subject, $message, $email_template = "", $emailFrom = "", $emailFromTitle = "")
     {
 
 
         if(!is_array($emailsTo)){
 
             $emailsTo = array($emailsTo);
+
+        }
+
+        if($email_template == ""){
+
+            $this->email_template = Config::get("notifications.MAIL_FROM");
+
+        }else{
+
+            $this->email_template = $email_template;
 
         }
 
@@ -108,7 +121,6 @@ class MailData extends MessageData
 
     public function isValid($data)
     {
-
         foreach($data['emailsTo'] as $data['emailTo']){
             $validator = Validator::make($data, [
                 'emailTo' => 'required|email',

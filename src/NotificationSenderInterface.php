@@ -3,7 +3,7 @@
 namespace Panic\Notifications;
 
 
-interface NotificationSender {
+interface NotificationSenderInterface {
 
     public function send($data);
 

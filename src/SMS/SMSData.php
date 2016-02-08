@@ -5,6 +5,7 @@ namespace Panic\Notifications\SMS;
 
 use Panic\Notifications\MessageData;
 use Illuminate\Support\Facades\Validator;
+use Panic\Notifications\SMS\SMSSender;
 
 
 class SMSData extends MessageData
@@ -13,7 +14,7 @@ class SMSData extends MessageData
 
     protected $message;
 
-    protected $sender = "Panic\\Notifications\\SMS\\SMSSender";
+    protected $sender = SMSSender::class;
 
 
     function __construct($numbersTo, $message)
