@@ -5,7 +5,6 @@ namespace Panic\Notifications\Push;
 
 use Panic\Notifications\MessageData;
 use Illuminate\Support\Facades\Validator;
-use Panic\Notifications\Push\PushNotificationSender;
 
 
 class PushNotificationData extends MessageData

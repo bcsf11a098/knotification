@@ -62,13 +62,14 @@ use Panic\Notifications\SMS\SMSData;
 ## Email ##
 
 ```
+$emailView = 'emails.notification'; // choose email view, if not set use default
 $emailFrom = 'notification@domain.com'; // if not set use from config file
 $emailFromTitle = 'Domain title'; // if not set use from config file
 $emails_to = array(email1@domain.com, email2@domain.com, ...);
 $subject = 'Notification!';
 $message = 'This is your first email notification!';
 
-$data = new MailData($emailsTo, $subject, $message, $emailFrom, $emailFromTitle);
+$data = new MailData($emailsTo, $subject, $message, $emailView, $emailFrom, $emailFromTitle);
 
 $notification->send($data);
 ```

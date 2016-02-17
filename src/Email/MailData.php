@@ -6,12 +6,12 @@ namespace Panic\Notifications\Email;
 use Panic\Notifications\MessageData;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Config;
-use Panic\Notifications\Email\MailSender;
+use View;
 
 
 class MailData extends MessageData
 {
-    protected $email_template;
+    protected $emailView;
 
     protected $emailFrom;
 
@@ -24,7 +24,7 @@ class MailData extends MessageData
     protected $sender = MailSender::class;
 
 
-    function __construct($emailsTo, $subject, $message, $email_template = "", $emailFrom = "", $emailFromTitle = "")
+    function __construct($emailsTo, $subject, $message, $emailView = "", $emailFrom = "", $emailFromTitle = "")
     {
 
 
@@ -34,13 +34,13 @@ class MailData extends MessageData
 
         }
 
-        if($email_template == ""){
+        if($emailView == ""){
 
-            $this->email_template = Config::get("notifications.MAIL_FROM");
+            $this->emailView = "emails.notification";
 
         }else{
 
-            $this->email_template = $email_template;
+            $this->emailView = $emailView;
 
         }
 
@@ -64,8 +64,7 @@ class MailData extends MessageData
 
         }
 
-
-        $data = array("emailFrom" => $emailFrom, "emailFromTitle" => $emailFromTitle, "emailsTo" => $emailsTo, "subject" => $subject, "message" => $message);
+        $data = array("emailView" => $emailView, "emailFrom" => $emailFrom, "emailFromTitle" => $emailFromTitle, "emailsTo" => $emailsTo, "subject" => $subject, "message" => $message);
 
         if($this->isValid($data)->fails()) {
             throw new \Exception('Data is not valid.');
@@ -77,6 +76,16 @@ class MailData extends MessageData
 
         $this->message = $message;
 
+    }
+
+    public function getEmailView()
+    {
+        return $this->emailView;
+    }
+
+    public function setEmailView($emailView)
+    {
+        $this->emailView = $emailView;
     }
 
     public function getEmailFrom()
@@ -129,6 +138,11 @@ class MailData extends MessageData
             if($validator->fails()){
                 throw new \Exception($data['emailTo'] . ' is not a valid email address.');
             }
+        }
+
+        if (!View::exists('notifications::'.$data['emailView']))
+        {
+            throw new \Exception('Email view not exists');
         }
 
         $validator = Validator::make($data, [

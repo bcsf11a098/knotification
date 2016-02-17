@@ -5,7 +5,6 @@ namespace Panic\Notifications\SMS;
 
 use Panic\Notifications\MessageData;
 use Illuminate\Support\Facades\Validator;
-use Panic\Notifications\SMS\SMSSender;
 
 
 class SMSData extends MessageData
