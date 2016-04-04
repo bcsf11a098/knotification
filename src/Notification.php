@@ -7,9 +7,9 @@ class Notification
 {
     public function send(MessageData $data)
     {
-        $sender_class = $data->getSender();
+        $senderClass = $data->getSender();
 
-        $notification = new $sender_class;
+        $notification = new $senderClass;
 
         $notification->send($data);
     }
