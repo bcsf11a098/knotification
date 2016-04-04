@@ -4,7 +4,7 @@
 ### Notifications Package for Laravel 5.* ###
 
 * Package for sending various types of notifications (Email, SMS and Push notification)
-* Version 0.0.1
+* Version 1.0.3
 * https://bitbucket.org/cloudhorizon/notifications/
 * This package wraps two other packages https://github.com/davibennun/laravel-push-notification for push notifications and https://github.com/twilio/twilio-php for sms notifications
 
