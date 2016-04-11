@@ -14,16 +14,15 @@
 ```
 "require": {
     ...
-    "panic/notifications" : "*"
+    "panic/notifications" : "1.*"
 }
-
-"minimum-stability": "dev",
-    "repositories": [
-        {
-            "url": "git@bitbucket.org:cloudhorizon/notifications.git",
-            "type": "vcs"
-        }
-    ],
+"repositories": [
+    {
+        "url": "git@bitbucket.org:cloudhorizon/notifications.git",
+        "type": "vcs"
+    }
+],
+    
 ```
 * Register the Notifications service provider by adding it to the providers array in the app/config/app.php file.
 

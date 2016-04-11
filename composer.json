@@ -16,7 +16,7 @@
     },
     "require": {
         "php": ">=5.5.9",
-        "laravel/framework": "5.1.*",
+        "laravel/framework": "5.2.*",
         "illuminate/support": "~5",
         "twilio/sdk": "5.2.x-dev",
         "davibennun/laravel-push-notification": "dev-laravel5",
