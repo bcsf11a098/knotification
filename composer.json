@@ -1,6 +1,6 @@
 {
     "name": "panic/notifications",
-    "version": "1.0.0",
+    "version": "1.0.6",
     "description": "Package for sending various types of notifications (Email, SMS and Push notification)",
     "license": "MIT",
     "authors": [
