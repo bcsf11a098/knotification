@@ -18,7 +18,7 @@
         "php": ">=5.5.9",
         "laravel/framework": "5.2.*",
         "illuminate/support": "~5",
-        "twilio/sdk": "5.2.x-dev",
+        "twilio/sdk": "~5",
         "davibennun/laravel-push-notification": "dev-laravel5",
         "guzzlehttp/guzzle": "~5.3|~6.0"
     },
@@ -27,5 +27,6 @@
         "mockery/mockery": "0.9.*",
         "phpunit/phpunit": "~4.0",
         "phpspec/phpspec": "~2.1"
-    }
+    },
+    "minimum-stability": "RC"
 }
