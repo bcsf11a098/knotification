@@ -1,6 +1,6 @@
 {
     "name": "panic/notifications",
-    "version": "1.0.7",
+    "version": "1.0.8",
     "description": "Package for sending various types of notifications (Email, SMS and Push notification)",
     "license": "MIT",
     "authors": [
@@ -18,7 +18,7 @@
         "php": ">=5.5.9",
         "laravel/framework": "5.2.*",
         "illuminate/support": "~5",
-        "twilio/sdk": "~5",
+        "twilio/sdk": "~4",
         "davibennun/laravel-push-notification": "dev-laravel5",
         "guzzlehttp/guzzle": "~5.3|~6.0"
     },
@@ -28,5 +28,5 @@
         "phpunit/phpunit": "~4.0",
         "phpspec/phpspec": "~2.1"
     },
-    "minimum-stability": "RC"
+    "minimum-stability": "stable"
 }
